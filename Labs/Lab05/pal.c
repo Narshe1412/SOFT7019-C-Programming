@@ -104,8 +104,6 @@ boolean isPalindrome(int * pListOfNumbers, int size)
 	return result;
 }
 
-
-
 char getCommand()
 {
 	char command;

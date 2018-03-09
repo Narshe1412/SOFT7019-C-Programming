@@ -12,6 +12,8 @@ void incrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition);
 
 void decrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition);
 
+isPalindrome(int * pListOfNumbers, int size);
+
 char getCommand();
 
 void processCommand(int * pList, int size, int * pCursorPosition, char command);

@@ -2,25 +2,31 @@
 #include "pal.h"
 #include "useful.h"
 
-int main()
+void startGame()
 {
 	int listOfNumbers[] = { 1,2,3,6,8,9 };
 	int numberOfDigits = 6;
 	int cursorPosition = 0;
 	int numberOfGoes = 0;
 
-	printf("\nAddress location of array is %p", listOfNumbers);
-	printf("\nPosition of cursor is %d", cursorPosition);
-
+	printf("Welcome to the palider...patid...polyg.... Palindrome game!");
 	displayState(listOfNumbers, cursorPosition, numberOfDigits, numberOfGoes);
 
-
-	while (1)
+	while (!isPalindrome(listOfNumbers, numberOfDigits))
 	{
-		processCommand(listOfNumbers, numberOfDigits, &cursorPosition, getCommand());	
+		numberOfGoes++;
+		processCommand(listOfNumbers, numberOfDigits, &cursorPosition, getCommand());
 		displayState(listOfNumbers, cursorPosition, numberOfDigits, numberOfGoes);
 	}
 
+	printf("\nYou won The Game! \nThe total number of attempts is: %d", numberOfGoes);
 	getchar();
+
 }
 
+int main()
+{
+	startGame();
+
+	return 0;
+}
