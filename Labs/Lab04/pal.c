@@ -1,15 +1,22 @@
 #include <stdio.h>
+#include "pal.h"
 
-void displayState(int *pListOfNumbers, int cursorPosition, int maxDigits) 
+
+void printArray(int *pListOfNumbers, int max)
 {
-    printf("\n\nGame State: < ");
-    for (int i = 0; i < maxDigits; i++)
-    {
-        printf("%d", pListOfNumbers[i]);
-    }
+	for (int i = 0; i < max; i++)
+	{
+		printf("%d", pListOfNumbers[i]);
+	}
+}
+
+void displayState(int *pListOfNumbers, int cursorPosition, int maxDigits)
+{
+	printf("\n\nGame State: < ");
+	printArray(pListOfNumbers, maxDigits);
 	printf(" >\n");
 	printf("              "); /* Trailing spaces for cursor position*/
-	for (int x = 0; x < maxDigits; x++) 
+	for (int x = 0; x < maxDigits; x++)
 	{
 		if (x == cursorPosition)
 		{
@@ -21,5 +28,27 @@ void displayState(int *pListOfNumbers, int cursorPosition, int maxDigits)
 		}
 	}
 	printf("\n");
-	
+}
+
+void moveCursorRight(int * pCursorPosition, int max)
+{
+	if (*pCursorPosition < max - 1)
+	{
+		++ *pCursorPosition;
+	}
+	printf("\tTest %d:", *pCursorPosition);
+}
+
+void moveCursorLeft(int * pCursorPosition, int max)
+{
+	if (*pCursorPosition > 0)
+	{
+		-- *pCursorPosition;
+	}
+	printf("\tTest %d:", *pCursorPosition);
+}
+
+void incrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition)
+{
+	pListOfNumbers[cursorPosition]++;
 }
