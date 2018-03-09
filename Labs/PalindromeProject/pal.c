@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "pal.h"
 #include "useful.h"
 #include <string.h>
+#include <math.h>
+#include <time.h>
 
 void printArray(int *pListOfNumbers, int max)
 {
@@ -55,7 +58,7 @@ void incrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition)
 	if (pListOfNumbers[cursorPosition] >= 9)
 	{
 		pListOfNumbers[cursorPosition] = 0;
-	} 
+	}
 	else
 	{
 		pListOfNumbers[cursorPosition]++;
@@ -89,7 +92,7 @@ char getCommand()
 {
 	char command;
 	boolean isValid = False;
-	char validCharacters[] = {'a','d','w','x'};
+	char validCharacters[] = { 'a','d','w','x' };
 	while (!isValid)
 	{
 		printf("\nPlease enter a new command: [a d w x] ");
@@ -125,7 +128,20 @@ void processCommand(int *pList, int size, int *pCursorPosition, char command, in
 	}
 }
 
-initialiseArray(int initialNumber) 
+int * initialiseArray(int initialNumber, int * size)
 {
+	int arrayLength = (int)floor(log10(initialNumber)) + 1;
+	int * numArray = (int *)malloc(arrayLength * sizeof(int));
+	for (int x = arrayLength - 1; x >= 0; x--) {
+		numArray[x] = initialNumber % 10;
+		initialNumber /= 10;
+	}
+	*size = arrayLength;
+	return numArray;
+}
 
+int getRandomStart(int size)
+{
+	srand((unsigned int) time(NULL));
+	return rand() % size;
 }
