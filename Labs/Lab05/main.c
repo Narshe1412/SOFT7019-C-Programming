@@ -14,7 +14,13 @@ int main()
 
 	displayState(listOfNumbers, cursorPosition, numberOfDigits, numberOfGoes);
 
-		
+
+	while (1)
+	{
+		processCommand(listOfNumbers, numberOfDigits, &cursorPosition, getCommand());	
+		displayState(listOfNumbers, cursorPosition, numberOfDigits, numberOfGoes);
+	}
+
 	getchar();
 }
 

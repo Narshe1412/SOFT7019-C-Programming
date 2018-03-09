@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "pal.h"
 #include "useful.h"
+#include <string.h>
 
 void printArray(int *pListOfNumbers, int max)
 {
@@ -10,6 +11,7 @@ void printArray(int *pListOfNumbers, int max)
 	}
 }
 
+/*
 void testPalindrome() {
 
 	int test1[] = { 1,2,3,3,2,1 };
@@ -30,12 +32,13 @@ void testPalindrome() {
 	printf(" is %d", isPalindrome(test4, 6));
 
 }
+*/
 
 void displayState(int *pListOfNumbers, int cursorPosition, int maxDigits, int numberOfGoes)
 {
 	printf("\n\nGame State: < ");
 	printArray(pListOfNumbers, maxDigits);
-	printf(" >\n");
+	printf(" >  Number of Goes: %d \n", numberOfGoes);
 	printf("              "); /* Trailing spaces for cursor position*/
 	for (int x = 0; x < maxDigits; x++)
 	{
@@ -48,8 +51,6 @@ void displayState(int *pListOfNumbers, int cursorPosition, int maxDigits, int nu
 			printf(" ");
 		}
 	}
-	printf("\nNumber of Goes: %d\n", numberOfGoes);
-	testPalindrome();
 }
 
 void moveCursorRight(int * pCursorPosition, int max)
@@ -58,7 +59,6 @@ void moveCursorRight(int * pCursorPosition, int max)
 	{
 		++ *pCursorPosition;
 	}
-	printf("\tTest %d:", *pCursorPosition);
 }
 
 void moveCursorLeft(int * pCursorPosition, int max)
@@ -67,12 +67,30 @@ void moveCursorLeft(int * pCursorPosition, int max)
 	{
 		-- *pCursorPosition;
 	}
-	printf("\tTest %d:", *pCursorPosition);
 }
 
 void incrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition)
 {
-	pListOfNumbers[cursorPosition]++;
+	if (pListOfNumbers[cursorPosition] >= 9)
+	{
+		pListOfNumbers[cursorPosition] = 0;
+	} 
+	else
+	{
+		pListOfNumbers[cursorPosition]++;
+	}
+}
+
+void decrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition)
+{
+	if (pListOfNumbers[cursorPosition] <= 0)
+	{
+		pListOfNumbers[cursorPosition] = 9;
+	}
+	else
+	{
+		pListOfNumbers[cursorPosition]--;
+	}
 }
 
 boolean isPalindrome(int * pListOfNumbers, int size)
@@ -84,4 +102,42 @@ boolean isPalindrome(int * pListOfNumbers, int size)
 			result = False;
 	}
 	return result;
+}
+
+
+
+char getCommand()
+{
+	char command;
+	boolean isValid = False;
+	char validCharacters[] = {'a','d','w','x'};
+	while (!isValid)
+	{
+		printf("\nPlease enter a new command: [a d w x] ");
+		command = myGetChar();
+		if (strchr(validCharacters, command))
+			isValid = True;
+		else
+			printf("Incorrect command. Must be a single letter [a d w x] ");
+	}
+	return command;
+}
+
+void processCommand(int *pList, int size, int *pCursorPosition, char command)
+{
+	switch (command)
+	{
+	case 'a':
+		moveCursorLeft(pCursorPosition, size);
+		break;
+	case 'd':
+		moveCursorRight(pCursorPosition, size);
+		break;
+	case 'w':
+		incrementDigitInListAtPos(pList, *pCursorPosition);
+		break;
+	case 'x':
+		decrementDigitInListAtPos(pList, *pCursorPosition);
+		break;
+	}
 }

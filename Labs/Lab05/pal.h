@@ -10,4 +10,10 @@ void moveCursorLeft(int * pCursorPosition, int max);
 
 void incrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition);
 
+void decrementDigitInListAtPos(int * pListOfNumbers, int cursorPosition);
+
+char getCommand();
+
+void processCommand(int * pList, int size, int * pCursorPosition, char command);
+
 #endif
