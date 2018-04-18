@@ -17,4 +17,6 @@ struct game {
 };
 
 void play_game();
+void initialise_game(struct game* p_game_info, char* name1, char* name2);
+
 #endif
