@@ -18,5 +18,7 @@ struct game {
 
 void play_game();
 void initialise_game(struct game* p_game_info, char* name1, char* name2);
+void draw_banner();
+void display_board(char board[3][3]);
 
 #endif
