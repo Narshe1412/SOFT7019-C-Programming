@@ -18,6 +18,7 @@ void play_game()
 	initialise_game(p_game_info, "John", "Annie");
 	draw_banner();
 	display_board(p_game_info->board);
+	print_status(p_game_info);
 
 	//test3
 	p_game_info->board[0][0] = X_SYMBOL; // top left X
@@ -55,5 +56,42 @@ void display_board(char board[3][3])
 	printf("\n    %c | %c | %c ", board[1][0], board[1][1], board[1][2]);
 	printf("\n   ---+---+---");
 	printf("\n    %c | %c | %c \n", board[2][0], board[2][1], board[2][2]);
+}
+
+void print_status(struct game* p_game_info)
+{
+	if (p_game_info->finished) {
+		//game over
+		switch (p_game_info->status)
+		{
+		case P1_WON:
+			printf("\nWell done %s, you are the winner!", p_game_info->playerNames[0]);
+			break;
+		case P2_WON:
+			printf("\nWell done %s, you are the winner!", p_game_info->playerNames[1]);
+			break;
+		case DRAW:
+			printf("\nGame over. It's a draw!");
+			break;
+		default:
+			printf("\nError: cannot retrieve game status.");
+			break;
+		}
+	}
+	else {
+		//game still going
+		switch (p_game_info->status)
+		{
+		case P1_TURN:
+			printf("\n%s's turn.", p_game_info->playerNames[0]);
+			break;
+		case P2_TURN:
+			printf("\n%s's turn.", p_game_info->playerNames[1]);
+			break;
+		default:
+			printf("\nError: cannot retrieve game status.");
+			break;
+		}
+	}
 }
 
