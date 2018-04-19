@@ -19,19 +19,32 @@ void play_game()
 	draw_banner();
 	display_board(p_game_info->board);
 	print_status(p_game_info);
+	display_board_positions();
 
 	//test3
 	p_game_info->board[0][0] = X_SYMBOL; // top left X
 	p_game_info->board[2][2] = O_SYMBOL; // bottom right o
 	display_board(p_game_info->board);
+
+	int row = -1;
+	int col = -1;
+	get_row_col(2, &row, &col);
+	printf("\nPosition 2 should be (0,1) and is <%d,%d>", row, col);
+	get_row_col(5, &row, &col);
+	printf("\nPosition 5 should be (1,1) and is <%d,%d>", row, col);
+	get_row_col(9, &row, &col);
+	printf("\nPosition 9 should be (2,2) and is <%d,%d>", row, col);
+	get_row_col(10, &row, &col);
+	printf("\nPosition 10 is not valid so (-1,-1) and is <%d,%d>", row, col);
+
 }
 
 void initialise_game(struct game* p_game_info, char* name1, char* name2)
 {
 	p_game_info->status = P1_TURN;
 
-	for (int r = 0; r < 3; r++) {
-		for (int c = 0; c < 3; c++) {
+	for (int r = 0; r < BOARD_SIZE; r++) {
+		for (int c = 0; c < BOARD_SIZE; c++) {
 			p_game_info->board[r][c] = SPACE;
 		}
 	}
@@ -40,7 +53,6 @@ void initialise_game(struct game* p_game_info, char* name1, char* name2)
 	strncpy(p_game_info->playerNames[0], name1, MAX_NAME_LEN);
 	strncpy(p_game_info->playerNames[1], name2, MAX_NAME_LEN);
 
-	printf("\nGame initialised");
 }
 
 void draw_banner()
@@ -49,7 +61,7 @@ void draw_banner()
 	printf("\n ---------------\n   GAME STATUS   \n ---------------");
 }
 
-void display_board(char board[3][3])
+void display_board(char board[BOARD_SIZE][BOARD_SIZE])
 {
 	printf("\n\n    %c | %c | %c ", board[0][0], board[0][1], board[0][2]);
 	printf("\n   ---+---+---");
@@ -95,3 +107,30 @@ void print_status(struct game* p_game_info)
 	}
 }
 
+void display_board_positions()
+{
+	printf("\n\n    1 | 2 | 3 ");
+	printf("\n   ---+---+---");
+	printf("\n    4 | 5 | 6 ");
+	printf("\n   ---+---+---");
+	printf("\n    7 | 8 | 9 \n");
+}
+
+void get_row_col(int position, int *row, int *col) {
+	if (position < 1 || position > 9) {
+		/* Return invalid coordinates on invalid position parameter */
+		*row = -1;
+		*col = -1;
+	}
+	else {
+		int location = 0;
+		for (int i = 0; i < BOARD_SIZE && location < position; i++) {
+			for (int j = 0; j < BOARD_SIZE && location < position; j++, location++) {
+				if (location == (position - 1)) {
+					*row = i;
+					*col = j;
+				}
+			}
+		}
+	}
+}
