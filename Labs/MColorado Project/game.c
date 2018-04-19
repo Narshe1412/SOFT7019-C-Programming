@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "game.h"
+#include "useful.h"
 
 const char SPACE = '-';
 const char X_SYMBOL = 'X';
@@ -21,6 +22,7 @@ void play_game()
 	print_status(p_game_info);
 	display_board_positions();
 
+	/*
 	//test3
 	p_game_info->board[0][0] = X_SYMBOL; // top left X
 	p_game_info->board[2][2] = O_SYMBOL; // bottom right o
@@ -36,6 +38,20 @@ void play_game()
 	printf("\nPosition 9 should be (2,2) and is <%d,%d>", row, col);
 	get_row_col(10, &row, &col);
 	printf("\nPosition 10 is not valid so (-1,-1) and is <%d,%d>", row, col);
+	*/
+	process_move(p_game_info);
+	display_board(p_game_info->board);
+	
+	
+	// Test step 5
+	process_move(p_game_info);
+	display_board(p_game_info->board);
+	p_game_info->status = P2_TURN;
+	process_move(p_game_info);
+	display_board(p_game_info->board);
+	process_move(p_game_info);
+	display_board(p_game_info->board);
+
 
 }
 
@@ -123,14 +139,37 @@ void get_row_col(int position, int *row, int *col) {
 		*col = -1;
 	}
 	else {
-		int location = 0;
-		for (int i = 0; i < BOARD_SIZE && location < position; i++) {
-			for (int j = 0; j < BOARD_SIZE && location < position; j++, location++) {
-				if (location == (position - 1)) {
-					*row = i;
-					*col = j;
-				}
+		*row = (position - 1) / 3;
+		*col = (position - 1) % 3;
+	}
+}
+
+void process_move(struct game* game_info)
+{
+	boolean isValid = False;
+	
+	while (!isValid)
+	{
+		printf("\nPlease enter a digit between 0 and 9: ");
+		char c = myGetChar();
+		int slot = c - '0';
+		int row = -1;
+		int col = -1;
+		
+		if (slot > 0 && slot <= 9) {
+			get_row_col(slot, &row, &col);
+			char boardstate = game_info->board[row][col];
+			if (boardstate == SPACE) {
+				if (game_info->status == P1_TURN) { game_info->board[row][col] = X_SYMBOL; }
+				if (game_info->status == P2_TURN) { game_info->board[row][col] = O_SYMBOL; }
+				isValid = True;
 			}
+			else {
+				printf("\nThis position is already taken. Choose another. ");
+			}
+		}
+		else {
+			printf("\nPlease enter a valid number. ");
 		}
 	}
 }
