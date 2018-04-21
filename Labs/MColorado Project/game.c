@@ -8,13 +8,19 @@ const char SPACE = '-';
 const char X_SYMBOL = 'X';
 const char O_SYMBOL = 'O';
 
-void play_game()
+void play_game(char *player1, char *player2)
 {
 	printf("Xs and Os!\n");
 
 	struct game* p_game_info = (struct game*) malloc(sizeof(struct game));
 
-	initialise_game(p_game_info, "John", "Annie");
+	printf("numero %d", getRandomNum(2));
+	if (getRandomNum(2)) {
+		initialise_game(p_game_info, player1, player2);
+	}
+	else {
+		initialise_game(p_game_info, player2, player1);
+	}
 	draw_banner();
 	display_board_positions();
 	print_status(p_game_info);
@@ -23,9 +29,10 @@ void play_game()
 	while (p_game_info->finished == False) {
 		process_move(p_game_info);
 		display_board(p_game_info->board);
-		check_winning_moves(p_game_info);
 		print_status(p_game_info);
 	}
+
+	free (p_game_info);
 }
 
 void initialise_game(struct game* p_game_info, char* name1, char* name2)
@@ -131,6 +138,7 @@ void process_move(struct game* game_info)
 				}
 				isValid = True;
 				game_info->finished = is_board_full(game_info);
+				check_winning_moves(game_info);
 				if (game_info->finished && (game_info->status != P1_WON && game_info->status != P2_WON)) {
 					game_info->status = DRAW;
 				}

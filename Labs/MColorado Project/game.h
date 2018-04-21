@@ -17,7 +17,7 @@ struct game {
 	boolean finished;
 };
 
-void play_game();
+void play_game(char *player1, char *player2);
 void initialise_game(struct game* p_game_info, char* name1, char* name2);
 void draw_banner();
 void display_board(char board[BOARD_SIZE][BOARD_SIZE]);
