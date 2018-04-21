@@ -25,4 +25,6 @@ void print_status(struct game* p_game_info);
 void display_board_positions();
 void get_row_col(int position, int *row, int *col);
 void process_move(struct game* game_info);
+boolean is_board_full(struct game* game_info);
+void check_winning_moves(struct game* game_info);
 #endif
