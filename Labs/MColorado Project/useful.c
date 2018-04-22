@@ -4,6 +4,7 @@
 enum Bool {False, True};
 typedef enum Bool boolean;
 
+/* Gets a valid character from console input */
 char myGetChar()
 {
 	char res = getchar();
@@ -21,7 +22,7 @@ char myGetChar()
 	return res;
 }
 
-/*Get random position for the cursor using a random seed using time()*/
+/*Get random number < max using a random seed with time()*/
 int getRandomNum(int max)
 {
 	srand((unsigned int)time(NULL));
